@@ -46,21 +46,19 @@ $code = gen_code();
 //======= Insert into DB =======
 $sql = "INSERT INTO users (name, code, coins) VALUES ('$name', '$code', $start_coins)";
 
-$result = $conn->query($sql);
-
 if ($conn->query($sql) === TRUE) {
-    echo "success";
+    echo $code;
 } else {
     $err .= "DB error :(";
     $failed = 1;
 }
-
+check_fail();
 //======================= Functions =====================
 function check_fail(){
   global $failed;
   global $err;
   if($failed == 1){
-    echo $err;
+    echo 'error: ' + $err;
     exit();
   }
 }
