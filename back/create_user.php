@@ -65,7 +65,7 @@ function check_fail(){
 
 
 function gen_code(){
-  $length = 20;
+  $length = 30;
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
