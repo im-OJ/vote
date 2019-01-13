@@ -1,5 +1,5 @@
 <?php
-
+//TODO: PREVENT SQL INJECTION
 
 $start_coins = 0;
 $name = $_REQUEST["name"];

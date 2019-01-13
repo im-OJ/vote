@@ -12,4 +12,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Returns JSON of query
+function query_DB($query){
+  global $conn;
+  $sql = $query;
+  $result = $conn->query($sql);
+  $dbdata = array();
+  while ( $row = $result->fetch_assoc())  {
+    $dbdata[]=$row;
+  }
+  return json_encode($dbdata);
+}
+
 ?>

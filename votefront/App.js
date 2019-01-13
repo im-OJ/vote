@@ -3,13 +3,15 @@ import { AppRegistry, View, TextInput, StyleSheet, Text } from 'react-native';
 import { Constants } from 'expo';
 import { AsyncStorage } from "react-native"
 import DialogManager, { ScaleAnimation, DialogContent } from 'react-native-dialog-component';
+import user from './classes/user.js';
 
-
-//// TODO: confirm user with server, check dialogs, store username on phone (?), submit image.
+//// TODO: Fix user class, confirm user with server, check dialogs, store username on phone (?), submit image.
 
 var server_address = 'http://178.128.168.118';
 var var_user_code = 'local_code'
 var is_user = 0;
+var this_user = user;
+
 const styles = StyleSheet.create({
 
   center: {
