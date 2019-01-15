@@ -1,26 +1,28 @@
 <?php
 //TODO: PREVENT SQL INJECTION
 
+if (!isset($_REQUEST["name"])){
+$err = "no name entered";
+  $failed = 1;
+}
+check_fail();
+
 $start_coins = 0;
 $name = $_REQUEST["name"];
 $failed = 0;
 $err = "";
 
 //======= Check username is valid =======
-if (!isset($_REQUEST)){
-$err = "no name entered";
-  $failed = 1;
-}
 
 check_fail();
 //Length
 if(strlen($name) < 4){
-  $err = $err + "too short \n";
+  $err = $err . "too short";
   $failed = 1;
 }
 
 if(strlen($name) > 20){
-  $err = $err + "too long \n";
+  $err = $err . "too long";
   $failed = 1;
 }
 check_fail();
@@ -33,7 +35,7 @@ $sql = "SELECT iduser FROM users WHERE name = '$name'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    $err .= "username taken \n";
+    $err .= "username taken";
     $failed = 1;
 } else {
 
@@ -47,7 +49,8 @@ $code = gen_code();
 $sql = "INSERT INTO users (name, code, coins) VALUES ('$name', '$code', $start_coins)";
 
 if ($conn->query($sql) === TRUE) {
-    echo $code;
+    $response_arr = array('success' => 1, 'code' => $code);
+    echo json_encode($response_arr);
 } else {
     $err .= "DB error :(";
     $failed = 1;
@@ -57,12 +60,17 @@ check_fail();
 function check_fail(){
   global $failed;
   global $err;
+
   if($failed == 1){
-    echo 'error: ' + $err;
+    $response_arr = array('success' => 0, 'error' => $err);
+    echo json_encode($response_arr);
     exit();
   }
 }
 
+function output(){
+
+}
 
 function gen_code(){
   $length = 30;
