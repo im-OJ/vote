@@ -33,4 +33,9 @@ function get_ID_with_code($code){
     return $row["iduser"];
   }
 }
+
+function store_post_info($iduser, $URL){
+  echo "storing image";
+  query_DB("INSERT into posts (iduser, URL) VALUES ($iduser,$URL)");
+}
 ?>
