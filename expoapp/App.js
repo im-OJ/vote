@@ -5,9 +5,10 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import DialogManager, { ScaleAnimation, DialogContent } from 'react-native-dialog-component';
 
-var server_address = 'http://178.128.168.118';
-var var_user_code = 'local_code'
-var user_code = '0'
+const server_address = 'http://178.128.168.118';
+const var_user_code = 'local_code';
+const user_code = '0';
+global.code = "x";
 //TODO: confirm user with server, reload after creating user
 //////////////////////////////////////////////////////////////////////
 //FIRST THINGS FIRST

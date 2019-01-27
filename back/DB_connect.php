@@ -14,11 +14,12 @@ if ($conn->connect_error) {
 
 // Returns JSON of query
 function query_DB($query){
+  echo "<br/>$query";
   global $conn;
   $sql = $query;
   $result = $conn->query($sql);
   $dbdata = array();
-  while ( $row = $result->fetch_assoc())  {
+  while ($row = $result->fetch_assoc())  {
     $dbdata[]=$row;
   }
   return json_encode($dbdata);
@@ -35,7 +36,14 @@ function get_ID_with_code($code){
 }
 
 function store_post_info($iduser, $URL){
-  echo "storing image";
-  query_DB("INSERT into posts (iduser, URL) VALUES ($iduser,$URL)");
+  $query = "INSERT into posts (iduser, URL) VALUES ($iduser,\"$URL\")";
+  global $conn;
+  $sql = $query;
+  if ($conn->query($sql) === TRUE) {
+    return TRUE;
+  }else{
+    return FALSE;
+
+  }
 }
 ?>

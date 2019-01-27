@@ -1,6 +1,7 @@
 <?php
 include("DB_connect.php");
 include("general.php");
+$code = "";
 //TODO filetype/size/etc. checks, change file name
 
 if(isset($_REQUEST)){
@@ -8,9 +9,11 @@ if(isset($_REQUEST)){
 }else{
   exit_with_error("No user code");
 }
+$path = $_FILES['userfile']['name'];
+$ext = pathinfo($path, PATHINFO_EXTENSION);
 $user_ID = get_ID_with_code($code);
-$uploaddir = 'posts/';
-$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+$uploaddir = 'p/';
+$uploadfile = $uploaddir . generateRandomString(20) . "." . $ext;
 
 
 
@@ -20,10 +23,21 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
    exit_with_error("There was a problem uploading this file :(");
 }
 
-store_post_info($user_ID, $uploadfile);
+if(store_post_info($user_ID, $uploadfile)){
+  exit_with_success("File submitted");
+}else{
+  exit_with_error("DB Error");
+}
 
 
-//Insert into posts (address, userID, )
 
-
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
 ?>
