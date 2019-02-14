@@ -14,7 +14,6 @@ if ($conn->connect_error) {
 
 // Returns JSON of query
 function query_DB($query){
-  echo "<br/>$query";
   global $conn;
   $sql = $query;
   $result = $conn->query($sql);

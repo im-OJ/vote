@@ -20,36 +20,65 @@ export default class UploadPage extends React.Component {
       <View>
       {image &&
         <Image source={{ uri: image }} style={{ width: 400, height: 300}} />}
-                <Text>{this.state.alertText}</Text>
+
         <MyButton title="Gallery" onPress ={() => {this.openGallery()}} />
         <MyButton title="Camera" onPress ={() => {this.openCamera()}}/>
         <MyButton title="Submit" onPress ={() => {this.submitImage()}}/>
+          <Text>{this.state.alertText}</Text>
       </View>
     )
   }
 
+  refreshPage(){
+    this.setState({
+      image: null,
+      data :null,
+      alertText: "",
+    });
+  }
+
   async submitImage(){
-    this.alertUser("");
+    this.alertUser("uploading");
+    let uri = this.state.image;
+    console.log(uri);
     if(this.state.image != null){
-    let url = SERVER_ADDRESS + "/create_post.php";
-    //COMMENT THIS showsButtons
-    url = "http://192.168.1.233/vote/vote/back/create_post.php";
-    console.log("Attempting upload");
-      const data = new FormData();
-      data.append('code','HJsTpLMK7I4O95qlmPs25pe7bNmjZt'); //change this for code variable TODO
-      data.append('photo',{
-        uri: this.state.image,
-        type: 'image/jpeg',
-        name: 'testPhotoName'
-      })
-      response = await fetch(url, {
-        method: 'post',
-        body: data
-      })
-      //response = await response.json()
-      console.log(response);
+      let apiUrl = SERVER_ADDRESS + '/create_post.php';
+      let re = /(?:\.([^.]+))?$/;
+      fileType = re.exec(uri)[1];
+      console.log(fileType);
+      let formData = new FormData();
+      formData.append('userfile', {
+        uri,
+        name: `photo.${fileType}`,
+        type: `image/${fileType}`,
+        base64: this.state.data,
+      });
+      formData.append('code',code);
+
+      let options = {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      let response = await fetch(apiUrl, options);
+      response = await response.json();
+
+      console.log(response)
+      if(response.success == 0){
+        this.alertUser(response.error);
+
+      }else{
+        this.refreshPage();
+        this.alertUser("upload succesfull")
+      }
+
+
     }else{
-      this.alertUser("please select an image");
+      this.alertUser("select an image");
     }
   }
   alertUser(text){

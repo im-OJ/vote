@@ -1,5 +1,4 @@
 <?php
-
 include("DB_connect.php");
 include("general.php");
 
@@ -11,22 +10,29 @@ if(isset($_REQUEST["code"])){
 }else{
   exit_with_error("No user code");
 }
-echo("hello");
+
+
+$name = generateRandomString();
 $path = $_FILES['userfile']['name'];
 $ext = pathinfo($path, PATHINFO_EXTENSION);
-$user_ID = get_ID_with_code($code);
-$uploaddir = 'p/';
-$uploadfile = $uploaddir . generateRandomString(20) . "." . $ext;
+$uploadFileName = $name."_".uniqid() . $ext;
+$uploadFile = $uploadFileName;
+define('UPLOAD_DIR', 'p/');
 
-
-
-if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-  echo("file up");//TODO error uploading local file
-} else {
-   exit_with_error("There was a problem uploading this file :(");
+if ($_FILES["userfile"]["error"] > 0){
+  exit_with_error("error code: " . $_FILES["userfile"]["error"]);
 }
 
-if(store_post_info($user_ID, $uploadfile)){
+if (move_uploaded_file($_FILES['userfile']['tmp_name'],UPLOAD_DIR.$uploadFileName)) {
+
+} else {
+    exit_with_error("Problem submitting file");
+}
+
+
+$user_ID = get_ID_with_code($code);
+
+if(store_post_info($user_ID, $uploadFile) == TRUE){
   exit_with_success("File submitted");
 }else{
   exit_with_error("DB Error");
@@ -34,7 +40,7 @@ if(store_post_info($user_ID, $uploadfile)){
 
 
 
-function generateRandomString($length = 10) {
+function generateRandomString($length = 20) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
