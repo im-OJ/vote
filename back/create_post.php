@@ -1,14 +1,17 @@
 <?php
+
 include("DB_connect.php");
 include("general.php");
+
 $code = "";
 //TODO filetype/size/etc. checks, change file name
 
-if(isset($_REQUEST)){
+if(isset($_REQUEST["code"])){
   $code = $_REQUEST["code"];
 }else{
   exit_with_error("No user code");
 }
+echo("hello");
 $path = $_FILES['userfile']['name'];
 $ext = pathinfo($path, PATHINFO_EXTENSION);
 $user_ID = get_ID_with_code($code);
@@ -18,7 +21,7 @@ $uploadfile = $uploaddir . generateRandomString(20) . "." . $ext;
 
 
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-
+  echo("file up");//TODO error uploading local file
 } else {
    exit_with_error("There was a problem uploading this file :(");
 }
@@ -40,4 +43,5 @@ function generateRandomString($length = 10) {
     }
     return $randomString;
 }
+
 ?>
