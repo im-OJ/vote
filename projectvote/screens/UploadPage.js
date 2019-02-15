@@ -84,6 +84,8 @@ export default class UploadPage extends React.Component {
   alertUser(text){
     this.setState({alertText: text});
   }
+
+
   async openCamera(){
     const { status } = await Permissions.askAsync(Permissions.CAMERA,Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchCameraAsync({

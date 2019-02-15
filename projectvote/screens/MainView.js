@@ -15,6 +15,9 @@ export default class App extends React.Component {
   }
   render(){
     return(
+      // <View style={{width: 400, height:400, backgroundColor: "red", flex:1}}>
+      // <ProfilePage />
+      // </View>
       <Swiper style={styles.wrapper} showsButtons={true}>
        <View style={styles.slide1}>
          <VotePage />
@@ -23,7 +26,7 @@ export default class App extends React.Component {
          <UploadPage />
        </View>
        <View style={styles.slide3}>
-         <ProfilePage />
+         <ProfilePage name={name} code={code}/>
        </View>
      </Swiper>
     )

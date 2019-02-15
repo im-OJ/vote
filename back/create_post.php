@@ -15,7 +15,7 @@ if(isset($_REQUEST["code"])){
 $name = generateRandomString();
 $path = $_FILES['userfile']['name'];
 $ext = pathinfo($path, PATHINFO_EXTENSION);
-$uploadFileName = $name."_".uniqid() . $ext;
+$uploadFileName = $name."_".uniqid() . "." . $ext;
 $uploadFile = $uploadFileName;
 define('UPLOAD_DIR', 'p/');
 
