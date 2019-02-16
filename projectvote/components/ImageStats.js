@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View,TextInput, Button} from 'react-native';
-import VoteImage from '../components/VoteImage'
 
-export default class VotePage extends React.Component {
+
+export default class ImageStats extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -11,10 +11,11 @@ export default class VotePage extends React.Component {
   }
   render(){
     return(
-      <View>
-        <VoteImage />
-        <VoteImage />
-      </View>
+      <Button
+        color={colours.mainButton}
+        title={this.props.title}
+        onPress={this.props.onPress}
+      />
     )
   }
 }
