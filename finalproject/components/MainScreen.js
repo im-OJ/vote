@@ -8,8 +8,6 @@ import Upload from './myscreens/Upload';
 
 export default class MainScreen extends React.Component {
   render() {
-    console.log("rendering mainscreeen");
-    console.log("A: " + typeof(global.ID_VOTE));
     return (
       <ScrollView contentContainerStyle={styles.container}>
 
