@@ -1,13 +1,18 @@
 <?php
 //TODO: PREVENT SQL INJECTION
-
+include("DB_connect.php");
+include("general.php");
 //confirms the user and code match, allowing user to log in
+if(!isset($_REQUEST["code"])){
+  exit_with_error("no code entered " . var_dump($_POST));
+}
+
 
 $code = $_REQUEST["code"];
+$result = get_ID_with_code($code);
 
-include("DB_connect.php");
-
-//$code = mysqli_real_escape_string($connect, $code);
-echo query_DB("SELECT name FROM users WHERE code = '$code'");
-
+if($result > 0){
+  exit_with_success();
+}
+exit_with_error("person not found");
  ?>

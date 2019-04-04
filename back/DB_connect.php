@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+
 $servername = $SQL_SERVER;
 $username = $SQL_USER;
 $password = $SQL_PASS;
@@ -14,9 +15,12 @@ if ($conn->connect_error) {
 
 // Returns JSON of query
 function query_DB($query){
+
   global $conn;
   $sql = $query;
+
   $result = $conn->query($sql);
+
   $dbdata = array();
   while ($row = $result->fetch_assoc())  {
     $dbdata[]=$row;
@@ -27,11 +31,14 @@ function query_DB($query){
 function get_ID_with_code($code){
   global $conn;
   $sql = "SELECT iduser FROM users WHERE code='$code'";
+
   $result = $conn->query($sql);
+
   $dbdata = array();
   while ( $row = $result->fetch_assoc())  {
     return $row["iduser"];
   }
+  return 0;
 }
 
 function store_post_info($iduser, $URL){

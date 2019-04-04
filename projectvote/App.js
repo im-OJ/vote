@@ -19,7 +19,7 @@ global.storeItem = async (name, value) =>{
   }
 }
 
-global.retreiveItem = async(name)=>{
+global.retreiveItem = async(name) => {
   const myItem = await AsyncStorage.getItem('@MyStore:' + name);
   return myItem
 }

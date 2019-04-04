@@ -46,13 +46,14 @@ check_fail();
 $code = gen_code();
 
 //======= Insert into DB =======
-$sql = "INSERT INTO users (name, code, coins) VALUES ('$name', '$code', $start_coins)";
+$sql = "INSERT INTO users (name, code) VALUES ('$name', '$code')";
 
 if ($conn->query($sql) === TRUE) {
     $response_arr = array('success' => 1, 'code' => $code);
     echo json_encode($response_arr);
 } else {
     $err .= "DB error :(";
+    echo $conn->error;
     $failed = 1;
 }
 check_fail();
