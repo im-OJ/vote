@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from 'react-native';
 
-export default class MyButton extends React.Component {
+export default class ExpandableImage extends React.Component {
 
   constructor(props){
     super(props)
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   minimized: {
     width: Dimensions.get('window').width,
-    height: 60,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: global.colourSecond,

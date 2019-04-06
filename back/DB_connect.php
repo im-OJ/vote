@@ -28,6 +28,19 @@ function query_DB($query){
   return json_encode($dbdata);
 }
 
+function select($query){
+  global $conn;
+  $sql = $query;
+
+  $result = $conn->query($sql);
+
+  $dbdata = array();
+  while ($row = $result->fetch_assoc())  {
+    $dbdata[]=$row;
+  }
+  return $dbdata;
+}
+
 function get_ID_with_code($code){
   global $conn;
   $sql = "SELECT iduser FROM users WHERE code='$code'";

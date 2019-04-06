@@ -14,6 +14,8 @@ global.colourText = "171D1C"
 
 global.SERVER_ADDRESS = "http://178.128.35.226";
 
+global.numMenuOptions = 3;
+
 global.name = "";
 global.code = "";
 
