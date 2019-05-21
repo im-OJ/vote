@@ -34,7 +34,9 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'],UPLOAD_DIR.$uploadFileNam
 $user_ID = get_ID_with_code($code);
 
 if(store_post_info($user_ID, $uploadFile) == TRUE){
+_log($userID . " submitted an image: " . $uploadFile);
   exit_with_success("File submitted");
+
 }else{
   exit_with_error("DB Error");
 }

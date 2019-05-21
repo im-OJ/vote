@@ -12,7 +12,9 @@ $code = $_REQUEST["code"];
 $result = get_ID_with_code($code);
 
 if($result > 0){
+  _log($result . " confirmed");
   exit_with_success();
+
 }
 exit_with_error("person not found");
  ?>

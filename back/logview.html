@@ -1,0 +1,43 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<iframe id="iframe" src="logs.txt" width="80%" height="90%">
+  </iframe>
+  <Button onClick="refresh()">Refresh</Button>
+
+
+<script>
+  var iframe = document.getElementById("iframe");
+
+
+  window.setInterval(function(){
+      var $contents = $('#iframe').contents();
+    $contents.scrollTop($contents.height());
+
+
+}, 100);
+
+  function refresh(){
+      iframe.src = iframe.src + "?" + makeid(10);
+  }
+
+  $(window).keypress(function (e) {
+  if (e.key === ' ' || e.key === 'Spacebar') {
+    // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
+    e.preventDefault()
+    refresh();
+  }
+})
+
+
+  function makeid(length) {
+   var result           = '';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+</script>

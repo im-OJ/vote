@@ -93,9 +93,25 @@ function store_vote($winnerID, $loserID, $code){
 function updatePostRank($postID, $newRank){
   global $conn;
   $query = "UPDATE posts SET rank = $newRank WHERE idpost = $postID";
+
   if ($conn->query($query) === TRUE) {
     return TRUE;
   }else{
+
+    return FALSE;
+
+  }
+}
+
+function increasePostReports($postID){
+  global $conn;
+
+  $query = "UPDATE posts SET reports = reports +  1 WHERE idpost = $postID";
+  echo $query;
+  if ($conn->query($query) === TRUE) {
+    return TRUE;
+  }else{
+    echo mysqli_error();
     return FALSE;
 
   }

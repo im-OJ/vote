@@ -1,11 +1,14 @@
 <?php
 include('general.php');
 include("DB_connect.php");
-$NUM_PAIRS = 10;
-
+$NUM_PAIRS = 100;
+$timeout = 0;
 $MINIMUM_SHARE_SCORE = 900;
 error_reporting(1);
 $code = $_REQUEST["code"];
+$id = get_ID_with_code($code);
+
+
 
 $response = query_DB("SELECT * FROM `posts` ORDER BY idpost DESC");
 
@@ -34,12 +37,17 @@ foreach($response as $image){
             array_push($pairs, array($first_image, $image2));
             array_push($used, $image2);
 //            echo "pair found <br>";
+            $timeout = 0;
             $pairs_found++;
             break;
           }
         }
       }else{
 //        echo "---already used";
+      if($timeout > 5){
+        $pairs_found = $pairs_found + $NUM_PAIRS;
+      }
+      $timeout++;
       }
     }
   }
@@ -56,6 +64,8 @@ for($i = 0; $i < sizeof($pairs); $i++){
 }
 //echo "<br><br>";
 
+_log("new images sent to a user");
+shuffle($pairs);
 echo json_encode($pairs);
 
 
@@ -63,7 +73,7 @@ echo json_encode($pairs);
 
 function isRankNear($image1, $image2){
   $difference = abs($image1->rank - $image2->rank);
-  if($difference < 500){
+  if($difference < 25){
     return TRUE;
   }else{
     return FALSE;

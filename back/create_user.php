@@ -1,6 +1,6 @@
 <?php
-//TODO: PREVENT SQL INJECTION
 
+include("general.php");
 if (!isset($_REQUEST["name"])){
 $err = "no name entered";
   $failed = 1;
@@ -57,6 +57,7 @@ if ($conn->query($sql) === TRUE) {
     $failed = 1;
 }
 check_fail();
+_log("New user created:" . $name);
 //======================= Functions =====================
 function check_fail(){
   global $failed;

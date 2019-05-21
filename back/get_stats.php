@@ -24,4 +24,5 @@ $stats["losses"] = sizeof($result);
 $stats["total"] = $stats["wins"] + $stats["losses"];
 
 echo json_encode($stats);
+_log("image stats sent to a user");
  ?>

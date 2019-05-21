@@ -15,4 +15,10 @@ function exit_with_success($note=0){
   exit();
 }
 
+function _log($logtext){
+  $txt = date('Y-m-d H:i:s') . " |: " . $logtext;
+   $myfile = file_put_contents('logs.txt', $txt . "\r\n", FILE_APPEND | LOCK_EX);
+
+}
+
 ?>

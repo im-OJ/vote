@@ -8,4 +8,5 @@ $code = $_REQUEST["code"];
 $id = get_ID_with_code($code);
 
 echo query_DB("SELECT URL, time, rank, idpost from posts WHERE iduser=" . $id);
+_log("profile sent to a user");
  ?>

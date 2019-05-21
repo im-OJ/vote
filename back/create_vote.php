@@ -26,7 +26,9 @@ $winnersNewRank = $results['a'];
 $losersNewRank = $results['b'];
 
 if(updatePostRank($winnerID, $winnersNewRank) && updatePostRank($loserID, $losersNewRank)){
+  _log("New vote cast: " . $winnerID . ">"  . $loserID);
   exit_with_success();
+
 }else{
   exit_with_error("error storing votes");
 }

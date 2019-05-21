@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
+import Dialog, { DialogContent } from 'react-native-popup-dialog';
+import { DialogTitle, DialogFooter, DialogButton } from 'react-native-popup-dialog';
 
 let pairsSeen = [];
 let pairList = [];
@@ -14,6 +16,8 @@ export default class Vote extends React.Component {
       image2: "",
       image1ID: null,
       image2ID: null,
+      reportvisible: false,
+      reportimage: 0,
     }
     this.getImages();
 
@@ -24,8 +28,29 @@ export default class Vote extends React.Component {
     return (
       <View style={styles.container}>
       <Text>Choose your favourite</Text>
-        <TouchableOpacity  style={styles.image} onPress = {() => {this.imagePressed(1)}}><Image source={{uri:this.state.image1}} style={styles.image} /></TouchableOpacity>
-        <TouchableOpacity   style={styles.image} onPress = {() => {this.imagePressed(2)}}><Image source={{uri:this.state.image2}} style={styles.image} /></TouchableOpacity>
+        <TouchableOpacity  style={styles.image} onLongPress = {() => {this.longPress(1)}} onPress = {() => {this.imagePressed(1)}}><Image source={{uri:this.state.image1}} style={styles.image} /></TouchableOpacity>
+        <TouchableOpacity   style={styles.image} onLongPress = {() => {this.longPress(1)}} onPress = {() => {this.imagePressed(2)}}><Image source={{uri:this.state.image2}} style={styles.image} /></TouchableOpacity>
+        <Dialog
+        footer={
+      <DialogFooter>
+        <DialogButton
+          text="CANCEL"
+        onPress={() => {this.hideReportDialog()}}
+        />
+        <DialogButton
+          text="OK"
+            onPress={() => {this.reportImage(this.state.reportimage)}}
+
+        />
+      </DialogFooter>
+    }
+         visible={this.state.reportvisible}
+         dialogTitle={<DialogTitle title="Report Image?" />}
+       >
+         <DialogContent>
+          <Text> Are you sure you would like to report this image? </Text>
+         </DialogContent>
+       </Dialog>
       </View>
     );
   }
@@ -34,6 +59,39 @@ export default class Vote extends React.Component {
 async imagePressed(num){
   this.updateImage();
   await this.sendVote(num);
+}
+
+async reportImage(num){
+  this.hideReportDialog();
+  let response = await global.getData("report.php?id=" + this.state.reportimage);
+  console.log(response)
+
+}
+
+showReportDialog(){
+  this.setState({
+    reportvisible: true,
+  })
+}
+
+hideReportDialog(){
+  this.setState({
+    reportvisible: false,
+  })
+}
+
+async longPress(num){
+  let imageID = "";
+  if(num == 1){
+    imageID = this.state.image1ID;
+  }else{
+    imageID = this.state.image1ID;
+  }
+  this.setState({
+    reportimage: imageID
+  })
+  console.log("long press");
+  this.showReportDialog();
 }
 
 sendVote = async(num) =>{
